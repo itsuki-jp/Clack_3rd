@@ -26,6 +26,7 @@ const fishes = [
 ]
 
 const fishOnScreen = [];
+function main() { }
 
 function initScreen() {
     ctx.beginPath();
@@ -44,4 +45,27 @@ function drawFish(fish) {
     ctx.fill()
 }
 initScreen()
+
+let time = 0;
+
+setInterval(() => {
+    if (time > 60) {
+        console.log("new fish")
+        time = 0;
+        let newFish = Object.assign({}, JSON.parse(JSON.stringify(fishes[Math.floor(Math.random() * fishes.length)])));;
+        newFish.pos = { x: -newFish.size.x, y: Math.random() * h }
+        if (Math.random() < 0.5) {
+            newFish.speed *= -1;
+            newFish.pos.x = w + newFish.pos.x;
+        }
+        fishOnScreen.push(newFish)
+    }
+    initScreen()
+    for (fish of fishOnScreen) {
+        drawFish(fish);
+        fish.pos.x += fish.speed;
+    }
+    time++;
+}, 1000 / 60);
+
 drawFish(fishes[0])
