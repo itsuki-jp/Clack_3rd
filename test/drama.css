@@ -1,0 +1,53 @@
+body {
+    background-color: #7c7577;
+    font-family: 'Gamja Flower', sans-serif;
+    font-size: 20px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #e2e2e2;
+    color: #7c7577;
+    position: fixed;
+    top: 0;
+}
+
+li {
+    float: left;
+    border-right: 1px solid #7c7577;
+}
+
+li a {
+    display: block;
+    color: #7c7577;
+    text-align: center;
+    padding: 14px 40px;
+    text-decoration: none;
+}
+
+li a:hover:not(.home) {
+    background-color: gray;
+    color: #e2e2e2;
+}
+
+.home {
+    background-color: #7c7577;
+    color: #e2e2e2;
+}
+
+.all {
+    position: absolute;
+    top: 20%;
+    display: inline-flex;
+    align-content: space-between;
+    justify-content: space-around;
+}
+
+img {
+    opacity: 0.3;
+    width: 300px;
+    height: 200px;
+}

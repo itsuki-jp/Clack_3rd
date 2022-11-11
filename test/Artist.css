@@ -1,0 +1,144 @@
+body {
+    background-color: #7c7577;
+    font-family: 'Gamja Flower', sans-serif;
+    font-size: 20px;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #e2e2e2;
+    color: #7c7577;
+    position: fixed;
+    top: 0;
+}
+li {
+    float: left;
+    border-right: 1px solid #7c7577;
+}
+li a {
+    display: block;
+    color: #7c7577;
+    text-align: center;
+    padding: 14px 40px;
+    text-decoration: none;
+}
+li a:hover:not(.home) {
+    background-color: gray;
+    color: #e2e2e2;
+}
+.home {
+    background-color: #7c7577;
+    color: #e2e2e2;
+}
+img {
+    opacity: 0.3;
+    width: 300px;
+}
+.twice, .youngji {
+    width: 300px;
+    height: 200px;
+}
+.pic {
+    position: absolute;
+    top: 20%;
+    display: flex;
+    flex-flow: wrap row; /*折り返し*/
+    justify-content: center; /*증앙*/
+    justify-content: space-around; /*両端に均等な*/
+}
+.Fromis {
+    position: relative;
+}
+.Fromis p {
+    font-size: 45px;
+    opacity: 0.7;
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    margin: 0;
+    padding: 0;
+}
+.Fromis a {
+    text-decoration: none;
+    color: #e2e2e2;
+}
+.Izone {
+    position: relative;
+}
+.Izone p {
+    color: #e2e2e2;
+    font-size: 45px;
+    opacity: 0.7;
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    margin: 0;
+    padding: 0;
+}
+.Twice {
+    position: relative;
+}
+.Twice p {
+    color: #e2e2e2;
+    font-size: 45px;
+    opacity: 0.7;
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    margin: 0;
+    padding: 0;
+}
+.Mamamoo {
+    position: relative;
+}
+.Mamamoo p {
+    color: #e2e2e2;
+    font-size: 45px;
+    opacity: 0.7;
+    position: absolute;
+    top: 35%;
+    left: 25%;
+    margin: 0;
+    padding: 0;
+}
+.Turns {
+    position: relative;
+}
+.Turns p {
+    color: #e2e2e2;
+    font-size: 45px;
+    opacity: 0.7;
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    margin: 0;
+    padding: 0;
+}
+.Yoojung {
+    position: relative;
+}
+.Yoojung p {
+    color: #e2e2e2;
+    font-size: 45px;
+    opacity: 0.7;
+    position: absolute;
+    top: 35%;
+    left: 15%;
+    margin: 0;
+    padding: 0;
+}
+.Youngji {
+    position: relative;
+}
+.Youngji p {
+    color: #e2e2e2;
+    font-size: 45px;
+    opacity: 0.7;
+    position: absolute;
+    top: 35%;
+    left: 15%;
+    margin: 0;
+    padding: 0;
+}

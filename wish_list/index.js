@@ -9,13 +9,17 @@ const setItemToLocalStorage = (key, value) => {
 const itemInfo = 'itemInfo';
 const keys = ['productName', 'price', 'rate'];
 
-const createTableRow = (items) => {
+const sortTable = (sortKey, itemList) => {
+
+}
+
+const createTableRow = (itemList, name) => {
     const table = document.getElementById('table');
     const tr = document.createElement('tr');
     table.appendChild(tr);
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < itemList['keys'].length; i++) {
         const td = document.createElement('td');
-        td.innerText = items[i];
+        td.innerText = itemList[name][itemList['keys'][i]];
         tr.appendChild(td);
     }
 }
@@ -28,7 +32,7 @@ const addItem = (itemList) => {
     itemList.name.push(productName);
     itemList[productName] = { productName: productName, price: price, rate, rate };
     setItemToLocalStorage(itemInfo, itemList);
-    createTableRow([productName, price, rate]);
+    createTableRow(itemList, productName);
 
     console.log(itemList);
 }
@@ -44,7 +48,7 @@ window.onload = (event) => {
     })();
 
     for (let i = 0; i < itemList['name'].length; i++) {
-        createTableRow()
+        createTableRow(itemList, itemList['name'][i]);
     }
 
     document.getElementById('submit').addEventListener('click', e => {
