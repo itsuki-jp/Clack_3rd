@@ -27,16 +27,17 @@ class Player extends GameObject {
         this.canJump = true;
         this.dy = -10;
         this.velocity = 0;
-        this.acceleration = 3;
+        this.acceleration = 0.1;
     }
     isCollided(Obj) {
-        if (Math.abs(this.x - Obj.x) < (this.w + Obj.w) / 2 && Math.abs(this.y - Obj.y) < (this.h + Obj.h) / 2) {
+        const buff = -5;
+        if ((Math.abs(this.x - Obj.x) < (this.w + Obj.w) / 2 + buff) && (Math.abs(this.y - Obj.y) < (this.h + Obj.h) / 2 + buff)) {
             return true;
         }
         return false;
     }
     jump() {
-        this.velocity = -25;
+        this.velocity = -5.5;
     }
     jumpUpdate() {
         if (this.canJump) return;
@@ -63,7 +64,7 @@ function drawObj(Obj) {
 }
 
 function claerCanvas() {
-    ctx.fillStyle = 'grey';
+    ctx.fillStyle = '#A8B1B8';
     ctx.fillRect(0, 0, width, height);
 }
 
@@ -78,39 +79,53 @@ function setPlayerMoves(player) {
     }, true);
 }
 
+const imgs = [];
+let imgNum = 0;
+for (let i = 1; i <= 4; i++) {
+    const imgTmp = new Image();
+    imgTmp.src = `${i}.png`;
+    imgs.push(imgTmp);
+}
+
 function main(player, obstacles, interval) {
     claerCanvas();
     player.jumpUpdate();
-    drawObj(player);
+    ctx.drawImage(imgs[Math.floor(imgNum / 25) % imgs.length], player.x, player.y, 40, 50);
+    imgNum++;
+    imgNum = imgNum % (25 * imgs.length);
+
     let hasCollided = false;
     const newObstacles = [];
     for (let obstacle of obstacles) {
-        obstacle.move(-20, 0);
+        obstacle.move(-1.2, 0);
         if (player.isCollided(obstacle)) {
             console.log('Collided!!!');
             hasCollided = true;
             obstacle.colour = 'green';
             // Todo: Show Game Over and Result
+        } else {
+            newObstacles.push(obstacle);
         }
         drawObj(obstacle);
-        newObstacles.push(obstacle);
+
     }
     if (hasCollided) {
         clearInterval(interval);
     }
-    if (Math.random() < 0.05) {
+    if (Math.random() < 0.005) {
         const obstacleSize = { w: 10, h: 40 }
         newObstacles.push(new Obstacle(width - obstacleSize.w, height - obstacleSize.h, obstacleSize.w, obstacleSize.h, 'blue'));
     }
+
     return newObstacles;
 }
 
 window.onload = () => {
-    const playerSize = { w: 20, h: 50 };
-    const player = new Player(30, height - playerSize.h, playerSize.w, playerSize.h, height, 'red');
+    const playerSize = { w: 40, h: 50 };
+    const player = new Player(50, height - playerSize.h, playerSize.w, playerSize.h, height, 'red');
     setPlayerMoves(player);
     let obstacles = [];
     const interval = setInterval(() => {
         obstacles = main(player, obstacles, interval);
-    }, 60);
+    }, 100 / 1000);
 }
