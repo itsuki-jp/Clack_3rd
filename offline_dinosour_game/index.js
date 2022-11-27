@@ -7,22 +7,44 @@ canvas.width = width;
 canvas.height = height;
 
 class GameObject {
-    constructor(x, y, w, h, colour) {
+    constructor(x, y, w, h, ctx) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-        this.colour = colour;
+        this.ctx = ctx;
+        this.imgs = {};
+        this.imgIdx = 0;
     }
     move(dx, dy) {
         this.x += dx;
         this.y += dy;
     }
+    setImage(name, src) {
+        const imgs = [];
+        for (let i = 0; i < src.length; i++) {
+            const imgTmp = new Image();
+            imgTmp.src = `${src[i]}.png`;
+            imgs.push(imgTmp);
+        }
+        this.imgs[name] = imgs;
+    }
+    drawImg(name) {
+        const nowImg = this.imgs[name];
+        try {
+            this.ctx.drawImage(nowImg[Math.floor(this.imgIdx / 25) % nowImg.length], this.x, this.y, this.w, this.h);
+        } catch (error) {
+            console.log(error)
+        }
+
+        this.imgIdx++;
+        this.imgIdx %= (25 * nowImg.length);
+    }
 }
 
 class Player extends GameObject {
-    constructor(x, y, w, h, ground, colour) {
-        super(x, y, w, h, colour);
+    constructor(x, y, w, h, ground, ctx) {
+        super(x, y, w, h, ctx);
         this.ground = ground;
         this.canJump = true;
         this.dy = -10;
@@ -53,8 +75,8 @@ class Player extends GameObject {
 }
 
 class Obstacle extends GameObject {
-    constructor(x, y, w, h, colour) {
-        super(x, y, w, h, colour);
+    constructor(x, y, w, h, ctx) {
+        super(x, y, w, h, ctx);
     }
 }
 
@@ -79,20 +101,10 @@ function setPlayerMoves(player) {
     }, true);
 }
 
-const imgs = [];
-let imgNum = 0;
-for (let i = 1; i <= 4; i++) {
-    const imgTmp = new Image();
-    imgTmp.src = `${i}.png`;
-    imgs.push(imgTmp);
-}
-
 function main(player, obstacles, interval) {
     claerCanvas();
     player.jumpUpdate();
-    ctx.drawImage(imgs[Math.floor(imgNum / 25) % imgs.length], player.x, player.y, 40, 50);
-    imgNum++;
-    imgNum = imgNum % (25 * imgs.length);
+    player.drawImg("move");
 
     let hasCollided = false;
     const newObstacles = [];
@@ -106,15 +118,17 @@ function main(player, obstacles, interval) {
         } else {
             newObstacles.push(obstacle);
         }
-        drawObj(obstacle);
+        obstacle.drawImg("move");
 
     }
     if (hasCollided) {
         clearInterval(interval);
     }
     if (Math.random() < 0.005) {
-        const obstacleSize = { w: 10, h: 40 }
-        newObstacles.push(new Obstacle(width - obstacleSize.w, height - obstacleSize.h, obstacleSize.w, obstacleSize.h, 'blue'));
+        const obstacleSize = { w: 30, h: 40 };
+        const tmp = new Obstacle(width - obstacleSize.w, height - obstacleSize.h, obstacleSize.w, obstacleSize.h, ctx);
+        tmp.setImage("move", ["unchi"]);
+        newObstacles.push(tmp);
     }
 
     return newObstacles;
@@ -122,10 +136,11 @@ function main(player, obstacles, interval) {
 
 window.onload = () => {
     const playerSize = { w: 40, h: 50 };
-    const player = new Player(50, height - playerSize.h, playerSize.w, playerSize.h, height, 'red');
+    const player = new Player(50, height - playerSize.h, playerSize.w, playerSize.h, height, ctx);
+    player.setImage("move", [1, 2, 3, 4]);
     setPlayerMoves(player);
     let obstacles = [];
     const interval = setInterval(() => {
         obstacles = main(player, obstacles, interval);
-    }, 100 / 1000);
+    }, 60 / 1000);
 }
